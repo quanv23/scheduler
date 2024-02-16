@@ -31,6 +31,10 @@ body {
 	right: 15px;
 }
 
+.header-add:active {
+	fill: #ffffff;
+}
+
 .header-nav {
 	position: absolute;
 	left: 15px;
@@ -48,7 +52,6 @@ body {
 	position: relative;
 	width: 85vw;
 	color: #f5f3f4;
-	border: 3px solid #e5383b;
 	border-radius: 20px;
 	background-color: #0b090a;
 	padding: 15px 20px;

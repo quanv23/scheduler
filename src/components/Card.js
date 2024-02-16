@@ -2,14 +2,40 @@ import { BsPencilSquare } from 'react-icons/bs';
 import { FaTrashAlt } from 'react-icons/fa';
 import React from 'react';
 
-export default function Card() {
+export default function Card(props) {
+	// Deconstructing card properties
+	const { id, title, category, date, time, location, isImportant } = props;
+
+	// Picks border colour depending on the category of the card
+	function pickColour() {
+		if (isImportant) {
+			return '#E5383B';
+		} else if (category.toLowerCase() === 'school') {
+			return '#9d4edd';
+		} else if (category.toLowerCase() === 'work') {
+			return '#0066ff';
+		} else if (category.toLowerCase() === 'personal') {
+			return '#95d5b2';
+		}
+	}
+
+	// Picks border style depending on importance
+	function pickBorderStyle() {
+		return isImportant ? 'dashed' : 'solid';
+	}
+
 	return (
-		<div className='card'>
-			<BsPencilSquare className='card-edit' size={20} color='E5383B' />
-			<FaTrashAlt className='card-trash' size={20} color='E5383B' />
-			<h2 className='card-title'>Crochet Club</h2>
-			<p className='card-date'>Thu. Feb. 15 | 3pm - 5pm</p>
-			<p className='card-location'>McMaster University</p>
+		<div
+			className='card'
+			style={{ border: `3px ${pickBorderStyle()} ${pickColour()}` }}
+		>
+			<BsPencilSquare className='card-edit' size={20} color={pickColour()} />
+			<FaTrashAlt className='card-trash' size={20} color={pickColour()} />
+			<h2 className='card-title'>{title}</h2>
+			<p className='card-date'>
+				{date} | {time}
+			</p>
+			<p className='card-location'>{location}</p>
 		</div>
 	);
 }
