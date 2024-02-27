@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import { nanoid } from 'nanoid';
-import Header from './components/header';
+import Header from './components/Header';
 import Card from './components/Card';
+import Footer from './components/Footer';
 
 export default function App() {
 	// Example state of card to be deleted later
@@ -42,6 +43,33 @@ export default function App() {
 			location: "Friend's House",
 			isImportant: true,
 		},
+		// {
+		// 	id: nanoid(),
+		// 	title: 'Birthday Party',
+		// 	category: 'School',
+		// 	date: 'Apr. 15, 2024',
+		// 	time: '2pm - 6pm',
+		// 	location: "Friend's House",
+		// 	isImportant: true,
+		// },
+		// {
+		// 	id: nanoid(),
+		// 	title: 'Birthday Party',
+		// 	category: 'School',
+		// 	date: 'Apr. 15, 2024',
+		// 	time: '2pm - 6pm',
+		// 	location: "Friend's House",
+		// 	isImportant: true,
+		// },
+		// {
+		// 	id: nanoid(),
+		// 	title: 'Birthday Party',
+		// 	category: 'School',
+		// 	date: 'Apr. 15, 2024',
+		// 	time: '2pm - 6pm',
+		// 	location: "Friend's House",
+		// 	isImportant: true,
+		// },
 	];
 
 	/*
@@ -73,6 +101,7 @@ export default function App() {
 		<div className='container'>
 			<Header />
 			<main className='card-container'>{cardElements}</main>
+			<Footer />
 		</div>
 	);
 }

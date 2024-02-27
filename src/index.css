@@ -8,9 +8,15 @@ body {
 }
 
 .container {
+	display: flex;
+	flex-direction: column;
 	background-color: #161a1d;
 	height: 100vh;
 }
+
+/* ============================================================================ */
+/* Header Styles */
+/* ============================================================================ */
 
 .header {
 	position: relative;
@@ -20,6 +26,7 @@ body {
 	height: 50px;
 	background-color: #0b090a;
 	color: #ffffff;
+	flex-shrink: 0;
 }
 
 .header-title {
@@ -40,12 +47,35 @@ body {
 	left: 15px;
 }
 
+/* ============================================================================ */
+/* Footer Styles */
+/* ============================================================================ */
+
+.footer {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	height: 50px;
+	background-color: #0b090a;
+	margin-top: auto;
+	flex-shrink: 0;
+}
+
+.footer-schedule,
+.footer-calendar {
+	margin: 0px 10px;
+}
+
+/* ============================================================================ */
+/* Card Styles */
+/* ============================================================================ */
+
 .card-container {
 	display: flex;
-	height: calc(100vh - 50px);
 	flex-direction: column;
 	align-items: center;
 	overflow: scroll;
+	margin: 10px 0px;
 }
 
 .card {
@@ -55,7 +85,7 @@ body {
 	border-radius: 20px;
 	background-color: #0b090a;
 	padding: 15px 20px;
-	margin-top: 20px;
+	margin: 10px 0px;
 }
 
 .card-edit {
