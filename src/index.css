@@ -38,13 +38,14 @@ body {
 	right: 15px;
 }
 
-.header-add:active {
-	fill: #ffffff;
-}
-
 .header-nav {
 	position: absolute;
 	left: 15px;
+}
+
+.header-add:active,
+.header-nav:active {
+	fill: white;
 }
 
 /* ============================================================================ */
@@ -64,6 +65,11 @@ body {
 .footer-schedule,
 .footer-calendar {
 	margin: 0px 10px;
+}
+
+.footer-schedule:active,
+.footer-calendar:active {
+	fill: white;
 }
 
 /* ============================================================================ */
@@ -98,6 +104,11 @@ body {
 	position: absolute;
 	right: 20px;
 	bottom: 20px;
+}
+
+.card-trash:active,
+.card-edit:active {
+	fill: white;
 }
 
 .card-title {

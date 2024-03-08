@@ -1,0 +1,30 @@
+FIRST MAKE ALL THE BUTTONS CHANGE TO WHITE WHEN BEING CLICKED FOR USER FEEDBACK
+
+1. Set up google firebase 
+    - Learn how to use the API
+    - Allow it to store information regarding the cards 
+    - Set up auto delete when dates pass (FINAL)
+    - Make sure to properly set up and update the states 
+    - Basically CRUD (create, read, update, delete)
+
+2. Create form for creating new cards 
+    - This component should also be used when editing previous cards, but change some stuff 
+    - Should obviously also change things inside the database as well 
+    - Add implementation that allows user to create their own categories and choose their own colours 
+
+3. Add implementation for editing card 
+    - This should go hand and hand with creating new cards 
+
+4. Implement delete button ard button  
+    - Remove button from view and database 
+    - Make a "Are you sure" view 
+
+5. Implement log in functionalitly 
+    - Must also create login view 
+    - Allow for multiple accounts 
+    - Maybe change nav button into just a logout button (that also uses the are you sure component)
+
+6. Implement calendar view which should open a new screen 
+    - Or at least swap out card-container with the calendar-container? 
+    - Honestly anything like that works 
+    - Should display the cards on a calendar instead of being simply listed 

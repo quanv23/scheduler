@@ -87,7 +87,7 @@ export default function App() {
 	// Creates multiple card elements by mapping their properties
 	const cardElements = cards.map((card) => (
 		<Card
-			id={card.id}
+			key={card.id}
 			title={card.title}
 			category={card.category}
 			date={card.date}
