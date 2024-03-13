@@ -1,4 +1,7 @@
-FIRST MAKE ALL THE BUTTONS CHANGE TO WHITE WHEN BEING CLICKED FOR USER FEEDBACK
+What I'm currently working on:
+- Working on creating a toggled view for creating new cards 
+- Need to somehow change the showInputForm state by passing a function to the child header state 
+- Since header has the + button that must be clicked in order to change the state 
 
 1. Set up google firebase 
     - Learn how to use the API
@@ -14,7 +17,6 @@ FIRST MAKE ALL THE BUTTONS CHANGE TO WHITE WHEN BEING CLICKED FOR USER FEEDBACK
 
 3. Add implementation for editing card 
     - This should go hand and hand with creating new cards 
-    - Also include priority display so that important meetings are always displayed first
 
 4. Implement delete card button  
     - Remove button from view and database 
@@ -29,3 +31,8 @@ FIRST MAKE ALL THE BUTTONS CHANGE TO WHITE WHEN BEING CLICKED FOR USER FEEDBACK
     - Or at least swap out card-container with the calendar-container? 
     - Honestly anything like that works 
     - Should display the cards on a calendar instead of being simply listed 
+
+7. Miscellaneous things
+    - Create better visual indication of important, something that stands out more
+    - Also include priority display so that important meetings are always displayed first
+    - Include filter by category
