@@ -14,8 +14,9 @@ FIRST MAKE ALL THE BUTTONS CHANGE TO WHITE WHEN BEING CLICKED FOR USER FEEDBACK
 
 3. Add implementation for editing card 
     - This should go hand and hand with creating new cards 
+    - Also include priority display so that important meetings are always displayed first
 
-4. Implement delete button ard button  
+4. Implement delete card button  
     - Remove button from view and database 
     - Make a "Are you sure" view 
 
