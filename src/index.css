@@ -8,6 +8,7 @@ body {
 }
 
 .container {
+	position: relative;
 	display: flex;
 	flex-direction: column;
 	background-color: #161a1d;
@@ -119,4 +120,25 @@ body {
 .card-location,
 .card-date {
 	margin: 0;
+}
+
+/* ============================================================================ */
+/* Card Form Styles */
+/* ============================================================================ */
+
+.new-card-container {
+	position: absolute;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	height: 100%;
+	width: 100%;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+	background-color: red;
+}
+
+.new-card {
+	background-color: blue;
 }

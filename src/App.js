@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useMemo } from 'react';
 import Header from './components/Header';
 import Card from './components/Card';
 import Footer from './components/Footer';
@@ -23,15 +23,15 @@ export default function App() {
 
 	// Implementing firestore database
 	const [cardList, setCardList] = useState([]);
-	console.log('render main');
+	const cardsCollectionRef = useMemo(() => collection(db, 'cards'), []);
 
 	// useEffect runs everytime the page is rendered or if any of its dependencies (elements in the list) are changed
 	// Asynchronous functions don't halt the program while waiting to finish, instead it awaits for functions to complete
 	useEffect(() => {
 		const getCardList = async () => {
 			try {
-				// Gets collection from databae and filters it, and attaches the id
-				const data = await getDocs(collection(db, 'cards'));
+				// Gets collection from database and filters it, and attaches the id
+				const data = await getDocs(cardsCollectionRef);
 				const filteredData = data.docs.map((doc) => ({
 					...doc.data(),
 					id: doc.id,
@@ -46,7 +46,7 @@ export default function App() {
 
 		// Make sure to call the function at the end (is a workaround to use async)
 		getCardList();
-	}, []);
+	}, [cardsCollectionRef]);
 
 	// Creates multiple card elements by mapping their properties
 	const cardElements = cardList.map((card) => (
@@ -66,15 +66,14 @@ export default function App() {
 	const [showInputForm, setShowInputForm] = useState(false);
 	const toggleInputForm = () => {
 		setShowInputForm((prevShowInputForm) => !prevShowInputForm);
-		console.log(showInputForm);
 	};
 
 	return (
 		<div className='container'>
-			{showInputForm && <NewCardForm />}
 			<Header toggleInputForm={toggleInputForm} />
 			<main className='card-container'>{cardElements}</main>
 			<Footer />
+			{showInputForm && <NewCardForm toggleInputForm={toggleInputForm} />}
 		</div>
 	);
 }

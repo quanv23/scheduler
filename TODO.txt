@@ -1,7 +1,7 @@
 What I'm currently working on:
 - Working on creating a toggled view for creating new cards 
-- Need to somehow change the showInputForm state by passing a function to the child header state 
-- Since header has the + button that must be clicked in order to change the state 
+- Monitor the reads from the firebase db specifically reads and useEffect 
+- Try creating new collection and making sure it correctly updates w/o exploding
 
 1. Set up google firebase 
     - Learn how to use the API
