@@ -1,7 +1,6 @@
 What I'm currently working on:
-- Working on creating a toggled view for creating new cards 
-- Monitor the reads from the firebase db specifically reads and useEffect 
-- Try creating new collection and making sure it correctly updates w/o exploding
+- Database wont do 50k reads anymore, whether it updates or not is just up to god at this point 
+- working on styling the add new card form 
 
 1. Set up google firebase 
     - Learn how to use the API
