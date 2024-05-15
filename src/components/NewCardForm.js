@@ -4,7 +4,7 @@ import React from 'react';
 export default function NewCardForm(props) {
 	const { toggleInputForm } = props;
 	return (
-		<div className='new-card-container'>
+		<div className='new-card-container' onClick={toggleInputForm}>
 			<div className='new-card' onClick={(event) => event.stopPropagation()}>
 				<FaX
 					className='back'
@@ -13,27 +13,36 @@ export default function NewCardForm(props) {
 					onClick={toggleInputForm}
 				/>
 				<h2>NEW CARD</h2>
-				<h4>Title</h4>
-				<input type='text' placeholder='Title' />
-				<h4>Date</h4>
-				<input type='date' />
-				<h4>Start / End</h4>
-				<input type='time' />
-				<input type='time' />
-				<h4>Location</h4>
-				<input type='text' placeholder='location' />
-				<h4>Category</h4>
-				<select>
-					<option value=''>Category</option>
-					<option value='school'>School</option>
-					<option value='work'>Work</option>
-					<option value='personal'>Personal</option>
-				</select>
-				<div className='urgent-checkbox'>
-					<input type='checkbox' />
-					<h4>Urgent</h4>
+				<label htmlFor='title'>Title: </label>
+				<input type='text' placeholder='Title' id='title' />
+
+				<label htmlFor='date'>Date: </label>
+				<input type='date' id='date' />
+
+				<label htmlFor='start'>Start / End: </label>
+				<input type='time' id='start' />
+				<input type='time' id='end' />
+
+				<label htmlFor='location'>Location: </label>
+				<input type='text' placeholder='Location' id='location' />
+
+				<label htmlFor='category'>Category: </label>
+				<div className='category-and-urgent'>
+					<div className='category-select'>
+						<select id='category'>
+							<option value=''>----------</option>
+							<option value='school'>School</option>
+							<option value='work'>Work</option>
+							<option value='personal'>Personal</option>
+						</select>
+					</div>
+					<div className='urgent-checkbox'>
+						<input type='checkbox' id='urgent' />
+						<label htmlFor='urgent'>Urgent</label>
+					</div>
 				</div>
-				<button className='add-button'>Add</button>
+
+				<button className='add-button'>Create Card</button>
 			</div>
 		</div>
 	);

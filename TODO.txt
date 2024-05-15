@@ -1,6 +1,6 @@
 What I'm currently working on:
-- Database wont do 50k reads anymore, whether it updates or not is just up to god at this point 
-- working on styling the add new card form 
+- current working on new card form to build into completing CRUD 
+- Need to stylize the input forms to have white border and turns red when in focus 
 
 1. Set up google firebase 
     - Learn how to use the API
