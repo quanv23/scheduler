@@ -209,10 +209,6 @@ body {
 	border: none;
 }
 
-.new-card input[type='date']::-webkit-calendar-picker-indicator {
-	filter: hue-rotate(180deg);
-}
-
 .back {
 	position: absolute;
 	top: 5%;
