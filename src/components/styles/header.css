@@ -1,0 +1,29 @@
+.header {
+	position: relative;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	height: 50px;
+	background-color: #0b090a;
+	color: #ffffff;
+	flex-shrink: 0;
+}
+
+.header-title {
+	margin: 0;
+}
+
+.header-add {
+	position: absolute;
+	right: 15px;
+}
+
+.header-nav {
+	position: absolute;
+	left: 15px;
+}
+
+.header-add:active,
+.header-nav:active {
+	fill: white;
+}

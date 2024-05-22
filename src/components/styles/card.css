@@ -1,0 +1,36 @@
+.card {
+	position: relative;
+	width: 85vw;
+	color: #f5f3f4;
+	border-radius: 20px;
+	background-color: #0b090a;
+	padding: 15px 20px;
+	margin: 10px 0px;
+}
+
+.card-edit {
+	position: absolute;
+	right: 20px;
+	top: 20px;
+}
+
+.card-trash {
+	position: absolute;
+	right: 20px;
+	bottom: 20px;
+}
+
+.card-trash:active,
+.card-edit:active {
+	fill: white;
+}
+
+.card-title {
+	margin: 0;
+	margin-bottom: 5px;
+}
+
+.card-location,
+.card-date {
+	margin: 0;
+}

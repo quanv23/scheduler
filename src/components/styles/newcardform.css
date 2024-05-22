@@ -1,0 +1,106 @@
+.new-card-container {
+	position: absolute;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	height: 100%;
+	width: 100%;
+	backdrop-filter: blur(3px);
+}
+
+.new-card {
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+	height: 510px;
+	width: 300px;
+	color: #f5f3f4;
+	border-radius: 20px;
+	border: 3px solid #e5383b;
+	background-color: #0b090a;
+	padding: 15px 20px;
+	margin: 10px 0px;
+}
+
+.new-card label {
+	display: block;
+	margin: 0 0 5px 0;
+	color: #d3d3d3;
+}
+
+.new-card input {
+	margin-bottom: 10px;
+}
+
+.new-card select {
+	margin-bottom: 10px;
+}
+
+.urgent-checkbox {
+	display: flex;
+}
+
+.category-and-urgent {
+	display: flex;
+	align-items: center;
+}
+
+.category-select {
+	width: 60%;
+}
+
+#category {
+	width: 125px;
+}
+
+.new-card input[type='text'],
+.new-card input[type='date'] {
+	width: 100%;
+	height: 30px;
+	background-color: #1f252e;
+	padding: 0 7.5px;
+	color: white;
+	border: none;
+}
+
+.new-card input:focus,
+.new-card select:focus {
+	outline: none;
+	border: 2px solid white;
+	border-radius: 5px;
+}
+
+.new-card input[type='time'],
+.new-card select {
+	width: 50%;
+	height: 30px;
+	background-color: #1f252e;
+	padding: 0 7.5px;
+	color: white;
+	border: none;
+}
+
+.back {
+	position: absolute;
+	top: 5%;
+	right: 7.5%;
+}
+
+.back:active {
+	fill: white;
+}
+
+.add-button {
+	margin: 20px auto;
+	height: 30px;
+	width: 100%;
+	background-color: #e5383b;
+	color: #d3d3d3;
+	border: none;
+	border-radius: 5px;
+}
+
+.add-button:active {
+	background-color: #ba181b;
+}

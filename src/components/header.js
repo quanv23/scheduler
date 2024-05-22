@@ -1,6 +1,7 @@
 import { FaPlus } from 'react-icons/fa';
 import { TiThMenu } from 'react-icons/ti';
 import React from 'react';
+import './styles/header.css';
 
 export default function Header(props) {
 	const { toggleInputForm } = props;

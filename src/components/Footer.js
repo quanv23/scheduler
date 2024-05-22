@@ -1,6 +1,7 @@
 import React from 'react';
 import { RiFileListLine } from 'react-icons/ri';
 import { FaRegCalendar } from 'react-icons/fa';
+import './styles/footer.css';
 
 export default function Footer() {
 	return (

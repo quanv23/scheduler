@@ -1,0 +1,19 @@
+.footer {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	height: 50px;
+	background-color: #0b090a;
+	margin-top: auto;
+	flex-shrink: 0;
+}
+
+.footer-schedule,
+.footer-calendar {
+	margin: 0px 10px;
+}
+
+.footer-schedule:active,
+.footer-calendar:active {
+	fill: white;
+}

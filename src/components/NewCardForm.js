@@ -1,5 +1,6 @@
 import { FaX } from 'react-icons/fa6';
 import React from 'react';
+import './styles/newcardform.css';
 
 export default function NewCardForm(props) {
 	const {

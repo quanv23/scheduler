@@ -1,6 +1,7 @@
 import { BsPencilSquare } from 'react-icons/bs';
 import { FaTrashAlt } from 'react-icons/fa';
 import React from 'react';
+import './styles/card.css';
 
 export default function Card(props) {
 	// Deconstructing card properties
