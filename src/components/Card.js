@@ -5,8 +5,7 @@ import './styles/card.css';
 
 export default function Card(props) {
 	// Deconstructing card properties
-	const { id, title, category, date, start, end, location, isImportant } =
-		props;
+	const { title, category, date, start, end, location, isImportant } = props;
 
 	// Picks border colour depending on the category of the card
 	function pickColour() {
@@ -16,6 +15,8 @@ export default function Card(props) {
 			return '#0066ff';
 		} else if (category.toLowerCase() === 'personal') {
 			return '#95d5b2';
+		} else {
+			return '#ffffff';
 		}
 	}
 

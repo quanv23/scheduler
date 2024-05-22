@@ -1,6 +1,6 @@
 What I'm currently working on:
-- implemented add card function 
-- new to design new user feedback screen after adding card that resets all fields and exits out of the screen
+- Designing confirmation card 
+- Need to implement deleting and editing 
 
 1. Set up google firebase 
     - Learn how to use the API
