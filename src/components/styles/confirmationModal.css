@@ -1,5 +1,4 @@
 .confirmation-container {
-	position: relative;
 	background-color: white;
 	display: flex;
 	flex-direction: column;
@@ -11,12 +10,6 @@
 	border-radius: 20px;
 	width: 300px;
 	margin: auto;
-}
-
-.confirmation-back {
-	position: absolute;
-	top: 20px;
-	right: 20px;
 }
 
 .confirmation-container h2 {

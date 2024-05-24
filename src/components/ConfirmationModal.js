@@ -1,10 +1,8 @@
-import { FaX } from 'react-icons/fa6';
 import { FaRegCheckCircle } from 'react-icons/fa';
 import React from 'react';
+import './styles/confirmationModal.css';
 
-import './styles/confirmationForm.css';
-
-export default function ConfirmationForm() {
+export default function ConfirmationModal() {
 	return (
 		<div className='confirmation-container'>
 			<FaRegCheckCircle

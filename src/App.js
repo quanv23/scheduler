@@ -2,14 +2,35 @@ import React, { useEffect, useState, useMemo, useCallback } from 'react';
 import Header from './components/Header';
 import Card from './components/Card';
 import Footer from './components/Footer';
-import NewCardForm from './components/NewCardForm';
-import ConfirmationForm from './components/ConfirmationForm';
+import NewCardModal from './components/NewCardModal';
 
 // Firestore imports
 import { db } from './config/firebase';
-import { getDocs, collection, addDoc } from 'firebase/firestore';
+import {
+	getDocs,
+	collection,
+	addDoc,
+	deleteDoc,
+	doc,
+} from 'firebase/firestore';
 
 export default function App() {
+	/* ============================================================================================
+    Deleting Cards
+    ============================================================================================ */
+
+	// Async function for deleting cards, and gets card list again afterwards
+	const deleteCard = async (id) => {
+		console.log('Tried Deleting');
+		try {
+			const cardDoc = doc(db, 'cards', id);
+			await deleteDoc(cardDoc);
+			getCardList();
+		} catch (error) {
+			console.log('Error Deleting Card: ', error);
+		}
+	};
+
 	/* ============================================================================================
     Creating Initial Cards 
     ============================================================================================ */
@@ -29,8 +50,8 @@ export default function App() {
 	// Implementing firestore database
 	// useMemo makes it so that the nested function only runs anytime something actually changes, and not everytime it renders
 	// Returns the return value of the function instead of the function itself which is what seperates it from useCallback
-	const cardsCollectionRef = useMemo(() => collection(db, 'cards'), []);
 	const [cardList, setCardList] = useState([]);
+	const cardsCollectionRef = useMemo(() => collection(db, 'cards'), []);
 
 	// Asynchronous functions don't halt the program while waiting to finish, instead it awaits for functions to complete
 	const getCardList = useCallback(async () => {
@@ -42,10 +63,10 @@ export default function App() {
 				id: doc.id,
 			}));
 
-			console.log('render useEffect');
+			console.log('Tried reading cards');
 			setCardList(filteredData);
-		} catch (err) {
-			console.log(err);
+		} catch (error) {
+			console.log('Error getting card list: ', error);
 		}
 	}, [cardsCollectionRef]);
 
@@ -54,14 +75,11 @@ export default function App() {
 		getCardList();
 	}, [getCardList]);
 
-	/* ============================================================================================
-    Creating New Cards
-    ============================================================================================ */
-
 	// Creates multiple card elements by mapping their properties
 	const cardElements = cardList.map((card) => (
 		<Card
 			key={card.id}
+			id={card.id}
 			title={card.title}
 			category={card.category}
 			date={card.date}
@@ -69,8 +87,13 @@ export default function App() {
 			end={card.end}
 			location={card.location}
 			isImportant={card.isImportant}
+			deleteCard={deleteCard}
 		/>
 	));
+
+	/* ============================================================================================
+    Creating New Cards
+    ============================================================================================ */
 
 	// New card states
 	const [newTitle, setNewTitle] = useState('');
@@ -104,25 +127,19 @@ export default function App() {
 	};
 
 	// State that tracks if the form overlay should show, and function to toggle it
-	const [showInputForm, setShowInputForm] = useState(false);
-	const toggleInputForm = () => {
-		setShowInputForm((prevShowInputForm) => !prevShowInputForm);
-	};
-
-	// State that tracks if the confirmation overlay show and to toggle it
-	const [showConfirmation, setShowConfirmation] = useState(true);
-	const toggleConfirmation = () => {
-		setShowConfirmation((prevShowConfirmation) => !prevShowConfirmation);
+	const [showInputModal, setshowInputModal] = useState(false);
+	const toggleInputModal = () => {
+		setshowInputModal((prevshowInputModal) => !prevshowInputModal);
 	};
 
 	return (
 		<div className='container'>
-			<Header toggleInputForm={toggleInputForm} />
+			<Header toggleInputModal={toggleInputModal} />
 			<main className='card-container'>{cardElements}</main>
 			<Footer />
-			{showInputForm && (
-				<NewCardForm
-					toggleInputForm={toggleInputForm}
+			{showInputModal && (
+				<NewCardModal
+					toggleInputModal={toggleInputModal}
 					onAddCard={onAddCard}
 					setNewTitle={setNewTitle}
 					setNewDate={setNewDate}
@@ -134,7 +151,6 @@ export default function App() {
 					isUrgent={isUrgent}
 				/>
 			)}
-			{showConfirmation && <ConfirmationForm />}
 		</div>
 	);
 }

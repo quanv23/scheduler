@@ -1,11 +1,27 @@
 import { BsPencilSquare } from 'react-icons/bs';
 import { FaTrashAlt } from 'react-icons/fa';
-import React from 'react';
+import React, { useState } from 'react';
+import DeleteConfirmationModal from './DeleteConfirmationModal';
 import './styles/card.css';
 
 export default function Card(props) {
 	// Deconstructing card properties
-	const { title, category, date, start, end, location, isImportant } = props;
+	const {
+		id,
+		title,
+		category,
+		date,
+		start,
+		end,
+		location,
+		isImportant,
+		deleteCard,
+	} = props;
+
+	const [showDeleteModal, setShowDeleteModal] = useState(false);
+	const toggleDelete = () => {
+		setShowDeleteModal((prevShowDeleteModal) => !prevShowDeleteModal);
+	};
 
 	// Picks border colour depending on the category of the card
 	function pickColour() {
@@ -26,17 +42,41 @@ export default function Card(props) {
 	}
 
 	return (
-		<div
-			className='card'
-			style={{ border: `3px ${pickBorderStyle()} ${pickColour()}` }}
-		>
-			<BsPencilSquare className='card-edit' size={20} color={pickColour()} />
-			<FaTrashAlt className='card-trash' size={20} color={pickColour()} />
-			<h2 className='card-title'>{title}</h2>
-			<p className='card-date'>
-				{date} | {start} - {end}
-			</p>
-			<p className='card-location'>{location}</p>
+		<div>
+			<div
+				className='card'
+				style={{ border: `3px ${pickBorderStyle()} ${pickColour()}` }}
+			>
+				<div id='card-text'>
+					<h2 className='card-info'>{title}</h2>
+					<p className='card-info'>
+						{date} | {start} - {end}
+					</p>
+					<p id='card-location' className='card-info'>
+						{location}
+					</p>
+				</div>
+				<div id='card-img'>
+					<BsPencilSquare
+						className='card-edit'
+						size={22.5}
+						color={pickColour()}
+					/>
+					<FaTrashAlt
+						className='card-trash'
+						size={22.5}
+						color={pickColour()}
+						onClick={toggleDelete}
+					/>
+				</div>
+			</div>
+			{showDeleteModal && (
+				<DeleteConfirmationModal
+					id={id}
+					toggleDelete={toggleDelete}
+					deleteCard={deleteCard}
+				/>
+			)}
 		</div>
 	);
 }
