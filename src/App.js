@@ -118,8 +118,7 @@ export default function App() {
 				isImportant: isUrgent,
 			});
 
-			// Resets isUrgent and rereads the card list
-			setIsUrgent(false);
+			// Gets card list again after
 			getCardList();
 		} catch (err) {
 			console.error(err);

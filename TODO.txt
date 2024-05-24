@@ -1,6 +1,6 @@
 What I'm currently working on:
-- Designing confirmation card 
-- Need to implement deleting and editing 
+- Redesign the modal and change the input system for date
+- Also need to refactor all css styles since did the completely wrong convention  
 
 1. Set up google firebase 
     - Learn how to use the API
