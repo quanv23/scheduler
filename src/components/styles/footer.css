@@ -2,15 +2,30 @@
 	display: flex;
 	justify-content: center;
 	align-items: center;
-	height: 50px;
+	height: 7.5vh;
 	background-color: #0b090a;
 	margin-top: auto;
 	flex-shrink: 0;
 }
 
-.footer-img {
-	margin: 0px 10px;
+#footer-btn {
+	display: flex;
+	height: 35px;
+	align-items: center;
+	background-color: #e5383b;
+	color: #d3d3d3;
+	border: none;
+	border-radius: 5px;
+	font-size: 16px;
+	padding: 0 10px;
+	margin: 0 10px;
 }
-.footer-img:active {
-	fill: white;
+
+#footer-btn:active {
+	background-color: #ba181b;
+}
+
+#footer-btn p,
+#footer-img {
+	margin: 0 3px;
 }

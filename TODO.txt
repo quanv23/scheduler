@@ -1,6 +1,6 @@
 What I'm currently working on:
-- Redesign the modal and change the input system for date
-- Also need to refactor all css styles since did the completely wrong convention  
+- Implement filtering for the cards 
+- Implement customizable categories 
 
 1. Set up google firebase 
     - Learn how to use the API
