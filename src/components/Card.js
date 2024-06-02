@@ -42,33 +42,27 @@ export default function Card(props) {
 	}
 
 	return (
-		<div>
-			<div
-				className='card'
-				style={{ border: `3px ${pickBorderStyle()} ${pickColour()}` }}
-			>
-				<div id='card-text'>
-					<h2 className='card-info'>{title}</h2>
-					<p className='card-info'>
-						{date} | {start} - {end}
-					</p>
-					<p id='card-location' className='card-info'>
-						{location}
-					</p>
-				</div>
-				<div id='card-img'>
-					<BsPencilSquare
-						className='card-edit'
-						size={22.5}
-						color={pickColour()}
-					/>
-					<FaTrashAlt
-						className='card-trash'
-						size={22.5}
-						color={pickColour()}
-						onClick={toggleDelete}
-					/>
-				</div>
+		<div
+			id='card'
+			style={{ border: `3px ${pickBorderStyle()} ${pickColour()}` }}
+		>
+			<div id='card-text'>
+				<h2 className='card-info'>{title}</h2>
+				<p className='card-info'>
+					{date} | {start} - {end}
+				</p>
+				<p id='card-location' className='card-info'>
+					{location}
+				</p>
+			</div>
+			<div id='card-img'>
+				<BsPencilSquare id='card-edit' size={22.5} color={pickColour()} />
+				<FaTrashAlt
+					id='card-trash'
+					size={22.5}
+					color={pickColour()}
+					onClick={toggleDelete}
+				/>
 			</div>
 			{showDeleteModal && (
 				<DeleteConfirmationModal

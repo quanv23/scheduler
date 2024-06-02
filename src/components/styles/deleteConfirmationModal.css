@@ -1,4 +1,4 @@
-.delete-container {
+#delete-container {
 	position: fixed;
 	display: flex;
 	justify-content: center;
@@ -11,7 +11,7 @@
 	z-index: 999;
 }
 
-.delete-modal {
+#delete-modal {
 	background-color: white;
 	display: flex;
 	flex-direction: column;
@@ -24,17 +24,16 @@
 	width: 300px;
 }
 
-.delete-container h2 {
+#delete-container h2 {
 	margin: 15px 0 15px 0;
 	color: white;
 }
 
-.delete-btn-container {
+#delete-btn-container {
 	display: flex;
 }
 
-.delete-cancel,
-.delete-confirm {
+.delete-btn {
 	width: 80px;
 	height: 32.5px;
 	margin: 0 5px;
@@ -43,19 +42,20 @@
 	font-family: 'Nunito', sans-serif;
 }
 
-.delete-cancel {
+#delete-cancel {
 	background-color: #f5f3f4;
+	color: black;
 }
 
-.delete-cancel:active {
+#delete-cancel:active {
 	background-color: lightgray;
 }
 
-.delete-confirm {
+#delete-confirm {
 	background-color: #e5383b;
 	color: white;
 }
 
-.delete-confirm:active {
+#delete-confirm:active {
 	background-color: #ba181b;
 }

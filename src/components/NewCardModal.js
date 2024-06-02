@@ -3,6 +3,7 @@ import ConfirmationForm from './ConfirmationModal';
 import './styles/newCardModal.css';
 
 export default function NewCardModal(props) {
+	// Deconstructing props
 	const {
 		toggleInputModal,
 		onAddCard,
@@ -33,7 +34,8 @@ export default function NewCardModal(props) {
 	};
 
 	// Adds card to database, toggles confirmation, and resets the form when create card is clicked
-	const handleCreateCard = () => {
+	const handleCreateCard = (e) => {
+		e.preventDefault();
 		onAddCard();
 		toggleConfirmation();
 		resetForm();
@@ -43,7 +45,12 @@ export default function NewCardModal(props) {
 		<div id='new-card-container' onClick={toggleInputModal}>
 			{showConfirmation && <ConfirmationForm />}
 			{!showConfirmation && (
-				<div id='new-card-modal' onClick={(event) => event.stopPropagation()}>
+				<form
+					id='new-card-modal'
+					autoComplete='off'
+					onClick={(event) => event.stopPropagation()}
+					onSubmit={handleCreateCard}
+				>
 					<h2>NEW CARD</h2>
 					<div className='label-input-container'>
 						<label htmlFor='title'>Title: </label>
@@ -57,9 +64,11 @@ export default function NewCardModal(props) {
 					<div className='label-input-container'>
 						<label htmlFor='date'>Date: </label>
 						<input
-							type='date'
+							type='text'
+							placeholder='mm-dd-yyyy'
 							id='date'
 							onChange={(e) => setNewDate(e.target.value)}
+							pattern='\d\d-\d\d-\d\d\d\d'
 						/>
 					</div>
 					<div className='label-input-container'>
@@ -67,15 +76,17 @@ export default function NewCardModal(props) {
 						<div className='flex-input'>
 							<input
 								type='text'
-								placeholder='Start'
+								placeholder='hh:mm'
 								id='start'
 								onChange={(e) => setNewStart(e.target.value)}
+								pattern='\d\d:\d\d'
 							/>
 							<input
 								type='text'
-								placeholder='End'
+								placeholder='hh:mm'
 								id='end'
 								onChange={(e) => setNewEnd(e.target.value)}
+								pattern='\d\d:\d\d'
 							/>
 						</div>
 					</div>
@@ -113,10 +124,13 @@ export default function NewCardModal(props) {
 						</div>
 					</div>
 
-					<button id='add-button' onClick={handleCreateCard}>
+					<button
+						id='add-button'
+						type='submit' /* onClick={handleCreateCard} */
+					>
 						Create Card
 					</button>
-				</div>
+				</form>
 			)}
 		</div>
 	);

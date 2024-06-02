@@ -6,15 +6,21 @@ import './styles/header.css';
 export default function Header(props) {
 	const { toggleInputModal } = props;
 	return (
-		<header className='header'>
-			<h2 className='header-title'>Scheduler</h2>
+		<header id='header'>
+			<TiThMenu
+				className='header-img'
+				id='header-nav'
+				size={25}
+				color='#E5383B'
+			/>
+			<h2>Scheduler</h2>
 			<FaPlus
-				className='header-add'
+				className='header-img'
+				id='header-add'
 				size={25}
 				color='#E5383B'
 				onClick={toggleInputModal}
 			/>
-			<TiThMenu className='header-nav' size={25} color='#E5383B' />
 		</header>
 	);
 }

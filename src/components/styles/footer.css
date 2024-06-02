@@ -1,4 +1,4 @@
-.footer {
+#footer {
 	display: flex;
 	justify-content: center;
 	align-items: center;
@@ -8,12 +8,9 @@
 	flex-shrink: 0;
 }
 
-.footer-schedule,
-.footer-calendar {
+.footer-img {
 	margin: 0px 10px;
 }
-
-.footer-schedule:active,
-.footer-calendar:active {
+.footer-img:active {
 	fill: white;
 }

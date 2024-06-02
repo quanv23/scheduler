@@ -132,9 +132,9 @@ export default function App() {
 	};
 
 	return (
-		<div className='container'>
+		<div id='container'>
 			<Header toggleInputModal={toggleInputModal} />
-			<main className='card-container'>{cardElements}</main>
+			<main id='card-container'>{cardElements}</main>
 			<Footer />
 			{showInputModal && (
 				<NewCardModal

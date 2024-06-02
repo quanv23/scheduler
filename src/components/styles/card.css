@@ -1,26 +1,12 @@
-.card {
+#card {
 	display: flex;
 	justify-content: space-between;
-	min-width: 315px;
-	max-width: 315px;
-	min-height: 120px;
+	width: 85%;
 	color: #f5f3f4;
 	border-radius: 20px;
 	background-color: #0b090a;
 	padding: 15px 20px;
 	margin: 10px 0px;
-}
-
-#card-img {
-	display: flex;
-	flex-direction: column;
-	justify-content: space-between;
-	margin: 5px 0;
-}
-
-.card-trash:active,
-.card-edit:active {
-	fill: white;
 }
 
 .card-info {
@@ -29,4 +15,24 @@
 
 #card-location {
 	font-style: italic;
+}
+
+#card-img {
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+	margin: 5px 0 5px 10px;
+}
+
+#card-trash {
+	margin-top: 10px;
+}
+
+#card-edit {
+	margin-bottom: 10px;
+}
+
+#card-trash:active,
+#card-edit:active {
+	fill: white;
 }

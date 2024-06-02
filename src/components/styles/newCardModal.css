@@ -9,7 +9,6 @@
 }
 
 #new-card-modal {
-	height: 500px;
 	width: 300px;
 	color: #f5f3f4;
 	border-radius: 20px;
@@ -20,11 +19,11 @@
 }
 
 #new-card-modal h2 {
-	margin: 5px 0 10px 0;
+	margin: 5px 0 20px 0;
 }
 
 .label-input-container {
-	margin-bottom: 10px;
+	margin-bottom: 15px;
 }
 
 .label-input-container label {
@@ -37,6 +36,7 @@
 .label-input-container select {
 	width: 100%;
 	height: 35px;
+	font-size: 16px;
 	background-color: #1f252e;
 	border-radius: 5px;
 	padding: 0 7.5px;
