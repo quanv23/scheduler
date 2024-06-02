@@ -1,8 +1,10 @@
 #new-card-container {
-	position: absolute;
+	position: fixed;
 	display: flex;
 	align-items: center;
 	justify-content: center;
+	top: 0;
+	left: 0;
 	height: 100%;
 	width: 100%;
 	backdrop-filter: blur(7.5px);
@@ -91,6 +93,7 @@
 	color: #d3d3d3;
 	border: none;
 	border-radius: 5px;
+	font-size: 16px;
 }
 
 #add-button:active {

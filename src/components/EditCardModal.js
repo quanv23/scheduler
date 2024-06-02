@@ -2,30 +2,19 @@ import React, { useState } from 'react';
 import ConfirmationForm from './ConfirmationModal';
 import './styles/newCardModal.css';
 
-export default function NewCardModal(props) {
-	// Deconstructing props
+export default function EditCardModal(props) {
 	const {
-		toggleInputModal,
-		onAddCard,
-		setNewTitle,
-		setNewDate,
-		setNewStart,
-		setNewEnd,
-		setNewLocation,
-		setNewCategory,
-		setIsUrgent,
-		isUrgent,
+		id,
+		title,
+		date,
+		start,
+		end,
+		location,
+		category,
+		isImportant,
+		toggleEditModal,
+		updateCard,
 	} = props;
-
-	const resetForm = () => {
-		setNewTitle('');
-		setNewDate('');
-		setNewStart('');
-		setNewEnd('');
-		setNewLocation('');
-		setNewCategory('');
-		setIsUrgent(false);
-	};
 
 	// State that tracks if the confirmation overlay show and to toggle it
 	const [showConfirmation, setShowConfirmation] = useState(false);
@@ -33,32 +22,49 @@ export default function NewCardModal(props) {
 		setShowConfirmation((prevShowConfirmation) => !prevShowConfirmation);
 	};
 
-	// Adds card to database, toggles confirmation, and resets the form when create card is clicked
-	const handleCreateCard = (e) => {
+	// States that track updated fields for cards
+	const [updatedTitle, setUpdatedTitle] = useState(title);
+	const [updatedDate, setUpdatedDate] = useState(date);
+	const [updatedStart, setUpdatedStart] = useState(start);
+	const [updatedEnd, setUpdatedEnd] = useState(end);
+	const [updatedLocation, setUpdatedLocation] = useState(location);
+	const [updatedCategory, setUpdatedCategory] = useState(category);
+	const [updatedIsUrgent, setUpdatedIsUrgent] = useState(isImportant);
+
+	const handleUpdateCard = (e) => {
 		e.preventDefault();
-		onAddCard();
+		updateCard(id, {
+			title: updatedTitle,
+			date: updatedDate,
+			start: updatedStart,
+			end: updatedEnd,
+			location: updatedLocation,
+			category: updatedCategory,
+			isImportant: updatedIsUrgent,
+		});
 		toggleConfirmation();
-		resetForm();
 	};
 
 	return (
-		<div id='new-card-container' onClick={toggleInputModal}>
+		<div id='new-card-container' onClick={toggleEditModal}>
 			{showConfirmation && <ConfirmationForm />}
 			{!showConfirmation && (
 				<form
 					id='new-card-modal'
 					autoComplete='off'
 					onClick={(event) => event.stopPropagation()}
-					onSubmit={handleCreateCard}
+					onSubmit={handleUpdateCard}
+					style={{ border: '3px solid #f48c06' }}
 				>
-					<h2>NEW CARD</h2>
+					<h2>EDIT CARD</h2>
 					<div className='label-input-container'>
 						<label htmlFor='title'>Title: </label>
 						<input
 							type='text'
 							placeholder='Title'
 							id='title'
-							onChange={(e) => setNewTitle(e.target.value)}
+							onChange={(e) => setUpdatedTitle(e.target.value)}
+							value={updatedTitle}
 						/>
 					</div>
 					<div className='label-input-container'>
@@ -67,7 +73,8 @@ export default function NewCardModal(props) {
 							type='text'
 							placeholder='mm-dd-yyyy'
 							id='date'
-							onChange={(e) => setNewDate(e.target.value)}
+							onChange={(e) => setUpdatedDate(e.target.value)}
+							value={updatedDate}
 							pattern='\d\d-\d\d-\d\d\d\d'
 						/>
 					</div>
@@ -78,14 +85,16 @@ export default function NewCardModal(props) {
 								type='text'
 								placeholder='hh:mm'
 								id='start'
-								onChange={(e) => setNewStart(e.target.value)}
+								onChange={(e) => setUpdatedStart(e.target.value)}
+								value={updatedStart}
 								pattern='\d\d:\d\d'
 							/>
 							<input
 								type='text'
 								placeholder='hh:mm'
 								id='end'
-								onChange={(e) => setNewEnd(e.target.value)}
+								onChange={(e) => setUpdatedEnd(e.target.value)}
+								value={updatedEnd}
 								pattern='\d\d:\d\d'
 							/>
 						</div>
@@ -96,7 +105,8 @@ export default function NewCardModal(props) {
 							type='text'
 							placeholder='Location'
 							id='location'
-							onChange={(e) => setNewLocation(e.target.value)}
+							onChange={(e) => setUpdatedLocation(e.target.value)}
+							value={updatedLocation}
 						/>
 					</div>
 
@@ -105,7 +115,8 @@ export default function NewCardModal(props) {
 						<div id='category-urgent-container'>
 							<select
 								id='category'
-								onChange={(e) => setNewCategory(e.target.value)}
+								onChange={(e) => setUpdatedCategory(e.target.value)}
+								value={updatedCategory}
 							>
 								<option value=''>----------</option>
 								<option value='school'>School</option>
@@ -116,16 +127,20 @@ export default function NewCardModal(props) {
 								<input
 									type='checkbox'
 									id='urgent'
-									checked={isUrgent}
-									onChange={(e) => setIsUrgent(e.target.checked)}
+									checked={updatedIsUrgent}
+									onChange={(e) => setUpdatedIsUrgent(e.target.checked)}
 								/>
 								<label htmlFor='urgent'>Important</label>
 							</div>
 						</div>
 					</div>
 
-					<button id='add-button' type='submit'>
-						Create Card
+					<button
+						id='add-button'
+						type='submit'
+						style={{ backgroundColor: '#f48c06' }}
+					>
+						Update Card
 					</button>
 				</form>
 			)}

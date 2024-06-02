@@ -8,7 +8,6 @@
 	top: 0;
 	left: 0;
 	backdrop-filter: blur(7.5px);
-	z-index: 999;
 }
 
 #delete-modal {

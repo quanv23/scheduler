@@ -12,6 +12,7 @@ import {
 	addDoc,
 	deleteDoc,
 	doc,
+	updateDoc,
 } from 'firebase/firestore';
 
 export default function App() {
@@ -28,6 +29,22 @@ export default function App() {
 			getCardList();
 		} catch (error) {
 			console.log('Error Deleting Card: ', error);
+		}
+	};
+
+	/* ============================================================================================
+    Editing Cards
+    ============================================================================================ */
+
+	// Async function for updating cards, and gets card list again afterwards
+	const updateCard = async (id, obj) => {
+		console.log('Tried editing');
+		try {
+			const cardDoc = doc(db, 'cards', id);
+			await updateDoc(cardDoc, obj);
+			getCardList();
+		} catch (error) {
+			console.log('Error editing card', error);
 		}
 	};
 
@@ -88,6 +105,7 @@ export default function App() {
 			location={card.location}
 			isImportant={card.isImportant}
 			deleteCard={deleteCard}
+			updateCard={updateCard}
 		/>
 	));
 
@@ -103,6 +121,12 @@ export default function App() {
 	const [newLocation, setNewLocation] = useState('');
 	const [newCategory, setNewCategory] = useState('');
 	const [isUrgent, setIsUrgent] = useState(false);
+
+	// State that tracks if the form overlay should show, and function to toggle it
+	const [showInputModal, setshowInputModal] = useState(false);
+	const toggleInputModal = () => {
+		setshowInputModal((prevshowInputModal) => !prevshowInputModal);
+	};
 
 	// onClick function for adding new cards
 	const onAddCard = async () => {
@@ -123,12 +147,6 @@ export default function App() {
 		} catch (err) {
 			console.error(err);
 		}
-	};
-
-	// State that tracks if the form overlay should show, and function to toggle it
-	const [showInputModal, setshowInputModal] = useState(false);
-	const toggleInputModal = () => {
-		setshowInputModal((prevshowInputModal) => !prevshowInputModal);
 	};
 
 	return (
