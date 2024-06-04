@@ -8,11 +8,7 @@ body {
 }
 
 #container {
-	position: relative;
-	display: flex;
-	flex-direction: column;
-	background-color: #161a1d;
-	height: 100vh;
+	width: 100vw;
 }
 
 #card-container {
@@ -20,5 +16,7 @@ body {
 	flex-direction: column;
 	align-items: center;
 	overflow: scroll;
-	margin: 10px 0px;
+	background-color: #161a1d;
+	height: 85vh;
+	padding: 10px 0;
 }

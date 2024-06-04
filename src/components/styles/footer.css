@@ -4,8 +4,6 @@
 	align-items: center;
 	height: 7.5vh;
 	background-color: #0b090a;
-	margin-top: auto;
-	flex-shrink: 0;
 }
 
 #footer-btn {

@@ -14,15 +14,15 @@ import {
 	doc,
 	updateDoc,
 } from 'firebase/firestore';
+import NewCategoryModal from './components/NewCategoryModal';
 
 export default function App() {
 	/* ============================================================================================
-    Deleting Cards
+    Deleting Cards / Categories 
     ============================================================================================ */
 
 	// Async function for deleting cards, and gets card list again afterwards
 	const deleteCard = async (id) => {
-		console.log('Tried Deleting');
 		try {
 			const cardDoc = doc(db, 'cards', id);
 			await deleteDoc(cardDoc);
@@ -32,13 +32,23 @@ export default function App() {
 		}
 	};
 
+	// Async function for deleting categories
+	const deleteCategory = async (id) => {
+		try {
+			const categoryDoc = doc(db, 'categories', id);
+			await deleteDoc(categoryDoc);
+			getCategoryList();
+		} catch (error) {
+			console.log('Error deleting category', error);
+		}
+	};
+
 	/* ============================================================================================
-    Editing Cards
+    Editing Cards / Categories 
     ============================================================================================ */
 
 	// Async function for updating cards, and gets card list again afterwards
 	const updateCard = async (id, obj) => {
-		console.log('Tried editing');
 		try {
 			const cardDoc = doc(db, 'cards', id);
 			await updateDoc(cardDoc, obj);
@@ -49,24 +59,12 @@ export default function App() {
 	};
 
 	/* ============================================================================================
-    Creating Initial Cards 
+    Creating Initial Cards / Categories 
     ============================================================================================ */
 
-	/*
-    card :: {
-        Title : String 
-        Category : String
-        Date : String (TODO find better input method)
-        Start : String
-        End : String
-        Location : String
-        isImportant : Bool
-    } 
-    */
-
 	// Implementing firestore database
-	// useMemo makes it so that the nested function only runs anytime something actually changes, and not everytime it renders
-	// Returns the return value of the function instead of the function itself which is what seperates it from useCallback
+	// useMemo memoizes the nested function, so it doesn't get called every rerender
+	// useCallback is similar to useMemo but instead of memoizing the function it returns the function itself
 	const [cardList, setCardList] = useState([]);
 	const cardsCollectionRef = useMemo(() => collection(db, 'cards'), []);
 
@@ -80,17 +78,12 @@ export default function App() {
 				id: doc.id,
 			}));
 
-			console.log('Tried reading cards');
+			console.log('Tried getting cards');
 			setCardList(filteredData);
 		} catch (error) {
 			console.log('Error getting card list: ', error);
 		}
 	}, [cardsCollectionRef]);
-
-	// useEffect runs everytime the page is rendered or if any of its dependencies (elements in the list) are changed
-	useEffect(() => {
-		getCardList();
-	}, [getCardList]);
 
 	// Creates multiple card elements by mapping their properties
 	const cardElements = cardList.map((card) => (
@@ -109,8 +102,37 @@ export default function App() {
 		/>
 	));
 
+	// States that track the current list of categories
+	const [categoryList, setCategoryList] = useState([]);
+	const categoriesCollectionRef = useMemo(
+		() => collection(db, 'categories'),
+		[]
+	);
+
+	// Gets the list of categories from firebase
+	const getCategoryList = useCallback(async () => {
+		try {
+			const data = await getDocs(categoriesCollectionRef);
+			const filteredData = data.docs.map((doc) => ({
+				...doc.data(),
+				id: doc.id,
+			}));
+
+			console.log('Tried getting categories');
+			setCategoryList(filteredData);
+		} catch (error) {
+			console.log('Error getting categories', error);
+		}
+	}, [categoriesCollectionRef]);
+
+	// useEffect runs everytime the page is rendered or if any of its dependencies (elements in the list) are changed
+	useEffect(() => {
+		getCardList();
+		getCategoryList();
+	}, [getCardList, getCategoryList]);
+
 	/* ============================================================================================
-    Creating New Cards
+    Creating New Cards / Categories
     ============================================================================================ */
 
 	// New card states
@@ -149,11 +171,27 @@ export default function App() {
 		}
 	};
 
+	// States that track if the new category modal is shown
+	const [showCategoryModal, setShowCategoryModal] = useState(false);
+	const toggleShowCategory = () => {
+		setShowCategoryModal((prevShowCategoryModal) => !prevShowCategoryModal);
+	};
+
+	// Adds category and gets the list of categories again
+	const onAddCategory = async (obj) => {
+		try {
+			await addDoc(categoriesCollectionRef, obj);
+			getCategoryList();
+		} catch (error) {
+			console.log('Error adding category', error);
+		}
+	};
+
 	return (
 		<div id='container'>
 			<Header toggleInputModal={toggleInputModal} />
 			<main id='card-container'>{cardElements}</main>
-			<Footer />
+			<Footer toggleShowCategory={toggleShowCategory} />
 			{showInputModal && (
 				<NewCardModal
 					toggleInputModal={toggleInputModal}
@@ -166,6 +204,14 @@ export default function App() {
 					setNewCategory={setNewCategory}
 					setIsUrgent={setIsUrgent}
 					isUrgent={isUrgent}
+				/>
+			)}
+			{showCategoryModal && (
+				<NewCategoryModal
+					categoryList={categoryList}
+					toggleShowCategory={toggleShowCategory}
+					onAddCategory={onAddCategory}
+					deleteCategory={deleteCategory}
 				/>
 			)}
 		</div>
