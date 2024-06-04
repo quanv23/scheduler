@@ -14,6 +14,7 @@ export default function EditCardModal(props) {
 		isImportant,
 		toggleEditModal,
 		updateCard,
+		categoryList,
 	} = props;
 
 	// State that tracks if the confirmation overlay show and to toggle it
@@ -44,6 +45,15 @@ export default function EditCardModal(props) {
 		});
 		toggleConfirmation();
 	};
+
+	// Cretes options for select based on all created categories
+	const categoryOptions = categoryList.map((category) => {
+		return (
+			<option key={category.id} value={category.category}>
+				{category.category}
+			</option>
+		);
+	});
 
 	return (
 		<div id='new-card-container' onClick={toggleEditModal}>
@@ -118,10 +128,8 @@ export default function EditCardModal(props) {
 								onChange={(e) => setUpdatedCategory(e.target.value)}
 								value={updatedCategory}
 							>
-								<option value=''>----------</option>
-								<option value='school'>School</option>
-								<option value='work'>Work</option>
-								<option value='personal'>Personal</option>
+								<option value=''>Empty</option>
+								{categoryOptions}
 							</select>
 							<div id='urgent-container'>
 								<input

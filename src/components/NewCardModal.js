@@ -15,6 +15,7 @@ export default function NewCardModal(props) {
 		setNewCategory,
 		setIsUrgent,
 		isUrgent,
+		categoryList,
 	} = props;
 
 	const resetForm = () => {
@@ -40,6 +41,15 @@ export default function NewCardModal(props) {
 		toggleConfirmation();
 		resetForm();
 	};
+
+	// Cretes options for select based on all created categories
+	const categoryOptions = categoryList.map((category) => {
+		return (
+			<option key={category.id} value={category.category}>
+				{category.category}
+			</option>
+		);
+	});
 
 	return (
 		<div id='new-card-container' onClick={toggleInputModal}>
@@ -107,10 +117,8 @@ export default function NewCardModal(props) {
 								id='category'
 								onChange={(e) => setNewCategory(e.target.value)}
 							>
-								<option value=''>----------</option>
-								<option value='school'>School</option>
-								<option value='work'>Work</option>
-								<option value='personal'>Personal</option>
+								<option value=''>Empty</option>
+								{categoryOptions}
 							</select>
 							<div id='urgent-container'>
 								<input

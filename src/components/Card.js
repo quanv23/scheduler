@@ -18,6 +18,7 @@ export default function Card(props) {
 		isImportant,
 		deleteCard,
 		updateCard,
+		categoryList,
 	} = props;
 
 	const [showDeleteModal, setShowDeleteModal] = useState(false);
@@ -33,14 +34,14 @@ export default function Card(props) {
 
 	// Picks border colour depending on the category of the card
 	function pickColour() {
-		if (category.toLowerCase() === 'school') {
-			return '#9d4edd';
-		} else if (category.toLowerCase() === 'work') {
-			return '#0066ff';
-		} else if (category.toLowerCase() === 'personal') {
-			return '#95d5b2';
-		} else {
+		const matchCategory = categoryList.filter(
+			(cat) => cat.category === category
+		);
+		console.log(matchCategory);
+		if (matchCategory.length === 0) {
 			return '#ffffff';
+		} else {
+			return matchCategory[0].colour;
 		}
 	}
 
@@ -96,6 +97,7 @@ export default function Card(props) {
 					isImportant={isImportant}
 					toggleEditModal={toggleEditModal}
 					updateCard={updateCard}
+					categoryList={categoryList}
 				/>
 			)}
 		</div>

@@ -58,6 +58,17 @@ export default function App() {
 		}
 	};
 
+	// Async function for updating categories
+	const updateCategory = async (id, obj) => {
+		try {
+			const categoryDoc = doc(db, 'categories', id);
+			await updateDoc(categoryDoc, obj);
+			getCategoryList();
+		} catch (error) {
+			console.log('Error editing category', error);
+		}
+	};
+
 	/* ============================================================================================
     Creating Initial Cards / Categories 
     ============================================================================================ */
@@ -84,23 +95,6 @@ export default function App() {
 			console.log('Error getting card list: ', error);
 		}
 	}, [cardsCollectionRef]);
-
-	// Creates multiple card elements by mapping their properties
-	const cardElements = cardList.map((card) => (
-		<Card
-			key={card.id}
-			id={card.id}
-			title={card.title}
-			category={card.category}
-			date={card.date}
-			start={card.start}
-			end={card.end}
-			location={card.location}
-			isImportant={card.isImportant}
-			deleteCard={deleteCard}
-			updateCard={updateCard}
-		/>
-	));
 
 	// States that track the current list of categories
 	const [categoryList, setCategoryList] = useState([]);
@@ -130,6 +124,24 @@ export default function App() {
 		getCardList();
 		getCategoryList();
 	}, [getCardList, getCategoryList]);
+
+	// Creates multiple card elements by mapping their properties
+	const cardElements = cardList.map((card) => (
+		<Card
+			key={card.id}
+			id={card.id}
+			title={card.title}
+			category={card.category}
+			date={card.date}
+			start={card.start}
+			end={card.end}
+			location={card.location}
+			isImportant={card.isImportant}
+			deleteCard={deleteCard}
+			updateCard={updateCard}
+			categoryList={categoryList}
+		/>
+	));
 
 	/* ============================================================================================
     Creating New Cards / Categories
@@ -204,6 +216,7 @@ export default function App() {
 					setNewCategory={setNewCategory}
 					setIsUrgent={setIsUrgent}
 					isUrgent={isUrgent}
+					categoryList={categoryList}
 				/>
 			)}
 			{showCategoryModal && (
@@ -212,6 +225,7 @@ export default function App() {
 					toggleShowCategory={toggleShowCategory}
 					onAddCategory={onAddCategory}
 					deleteCategory={deleteCategory}
+					updateCategory={updateCategory}
 				/>
 			)}
 		</div>

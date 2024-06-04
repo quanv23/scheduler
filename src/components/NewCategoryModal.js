@@ -5,8 +5,13 @@ import './styles/newCategoryModal.css';
 
 export default function NewCategoryModal(props) {
 	// Decontructing props
-	const { categoryList, toggleShowCategory, onAddCategory, deleteCategory } =
-		props;
+	const {
+		categoryList,
+		toggleShowCategory,
+		onAddCategory,
+		deleteCategory,
+		updateCategory,
+	} = props;
 
 	// States that track fields for new category
 	const [newCategoryTitle, setNewCategoryTitle] = useState('');
@@ -32,6 +37,7 @@ export default function NewCategoryModal(props) {
 				category={category.category}
 				colour={category.colour}
 				deleteCategory={deleteCategory}
+				updateCategory={updateCategory}
 			/>
 		);
 	});
