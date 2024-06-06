@@ -46,7 +46,7 @@ export default function Card(props) {
 
 	// Picks border style depending on importance
 	function pickBorderStyle() {
-		return isImportant ? 'dashed' : 'solid';
+		return isImportant ? '3px dashed' : '3px solid';
 	}
 
 	// Formats the day into a more readable form
@@ -61,10 +61,7 @@ export default function Card(props) {
 	};
 
 	return (
-		<div
-			id='card'
-			style={{ border: `3px ${pickBorderStyle()} ${pickColour()}` }}
-		>
+		<div id='card' style={{ border: `${pickBorderStyle()} ${pickColour()}` }}>
 			<div id='card-text'>
 				<h2 className='card-info'>{title}</h2>
 				<p className='card-info'>
