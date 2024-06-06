@@ -37,7 +37,6 @@ export default function Card(props) {
 		const matchCategory = categoryList.filter(
 			(cat) => cat.category === category
 		);
-		console.log(matchCategory);
 		if (matchCategory.length === 0) {
 			return '#ffffff';
 		} else {
@@ -50,6 +49,17 @@ export default function Card(props) {
 		return isImportant ? 'dashed' : 'solid';
 	}
 
+	// Formats the day into a more readable form
+	const dateObj = new Date(date);
+	const getDateString = () => {
+		if (isNaN(dateObj.getTime())) {
+			return 'Invalid Date';
+		} else {
+			const [day, month, num, year] = dateObj.toDateString().split(' ');
+			return `${day}, ${month}. ${num}/${year[2]}${year[3]}`;
+		}
+	};
+
 	return (
 		<div
 			id='card'
@@ -58,7 +68,7 @@ export default function Card(props) {
 			<div id='card-text'>
 				<h2 className='card-info'>{title}</h2>
 				<p className='card-info'>
-					{date} | {start} - {end}
+					{getDateString()} | {start} - {end}
 				</p>
 				<p id='card-location' className='card-info'>
 					{location}

@@ -81,11 +81,11 @@ export default function EditCardModal(props) {
 						<label htmlFor='date'>Date: </label>
 						<input
 							type='text'
-							placeholder='mm-dd-yyyy'
+							placeholder='yyyy-mm-dd'
 							id='date'
 							onChange={(e) => setUpdatedDate(e.target.value)}
 							value={updatedDate}
-							pattern='\d\d-\d\d-\d\d\d\d'
+							pattern='\d\d\d\d-\d\d-\d\d'
 						/>
 					</div>
 					<div className='label-input-container'>

@@ -18,6 +18,51 @@ import NewCategoryModal from './components/NewCategoryModal';
 
 export default function App() {
 	/* ============================================================================================
+    All States
+    ============================================================================================ */
+
+	// Implementing firestore database
+	// useMemo memoizes the nested function, so it doesn't get called every rerender
+	// useCallback is similar to useMemo but instead of memoizing the function it returns the function itself
+	const [cardList, setCardList] = useState([]);
+	const [importantCardList, setImportantCardList] = useState([]);
+	const cardsCollectionRef = useMemo(() => collection(db, 'cards'), []);
+
+	// States that track the current list of categories
+	const [categoryList, setCategoryList] = useState([]);
+	const categoriesCollectionRef = useMemo(
+		() => collection(db, 'categories'),
+		[]
+	);
+
+	// New card states
+	const [newTitle, setNewTitle] = useState('');
+	const [newDate, setNewDate] = useState('');
+	const [newStart, setNewStart] = useState('');
+	const [newEnd, setNewEnd] = useState('');
+	const [newLocation, setNewLocation] = useState('');
+	const [newCategory, setNewCategory] = useState('');
+	const [isUrgent, setIsUrgent] = useState(false);
+
+	// State that tracks if new card modal should show, and function to toggle it
+	const [showInputModal, setshowInputModal] = useState(false);
+	const toggleInputModal = () => {
+		setshowInputModal((prevshowInputModal) => !prevshowInputModal);
+	};
+
+	// States that track if the new category modal is shown
+	const [showCategoryModal, setShowCategoryModal] = useState(false);
+	const toggleShowCategory = () => {
+		setShowCategoryModal((prevShowCategoryModal) => !prevShowCategoryModal);
+	};
+
+	// States that toggles between either filter by date or category
+	const [filterByCategory, setfilterByCategory] = useState(false);
+
+	// States that toggles whether important cards are visible or not
+	const [importantVisibility, setImportantVisibility] = useState(true);
+
+	/* ============================================================================================
     Deleting Cards / Categories 
     ============================================================================================ */
 
@@ -73,35 +118,63 @@ export default function App() {
     Creating Initial Cards / Categories 
     ============================================================================================ */
 
-	// Implementing firestore database
-	// useMemo memoizes the nested function, so it doesn't get called every rerender
-	// useCallback is similar to useMemo but instead of memoizing the function it returns the function itself
-	const [cardList, setCardList] = useState([]);
-	const cardsCollectionRef = useMemo(() => collection(db, 'cards'), []);
-
 	// Asynchronous functions don't halt the program while waiting to finish, instead it awaits for functions to complete
 	const getCardList = useCallback(async () => {
+		// Function that filters the given list by date
+		const filtterByDate = (arrayOfCards) => {
+			arrayOfCards.sort((a, b) => {
+				const d1 = new Date(a.date);
+				const d2 = new Date(b.date);
+				return d1 - d2;
+			});
+		};
+
 		try {
 			// Gets collection from database and filters it, and attaches the id
 			const data = await getDocs(cardsCollectionRef);
-			const filteredData = data.docs.map((doc) => ({
+			const organizedData = data.docs.map((doc) => ({
 				...doc.data(),
 				id: doc.id,
 			}));
 
 			console.log('Tried getting cards');
-			setCardList(filteredData);
+
+			// Splits the cards into important and non-important cards to render them seperately
+			const importantFilteredData = organizedData.filter(
+				(card) => card.isImportant
+			);
+			filtterByDate(importantFilteredData);
+			setImportantCardList(importantFilteredData);
+
+			// Non-important cards abide by the filter rules
+			const filteredData = organizedData.filter((card) => !card.isImportant);
+			if (filterByCategory) {
+				// Filters cards by category, by first reducing the array into an object of arrays where the keys are unique categories
+				// Then iterating through the object.values() and concatenating them to a final array and setting the state
+				const groupedByCategory = filteredData.reduce((acc, obj) => {
+					const { category } = obj;
+					if (!acc[category]) {
+						acc[category] = [];
+					}
+					acc[category].push(obj);
+					return acc;
+				}, {});
+
+				let sortedArray = [];
+				for (let arr of Object.values(groupedByCategory)) {
+					filtterByDate(arr);
+					sortedArray = sortedArray.concat(arr);
+				}
+				setCardList(sortedArray);
+			} else {
+				// Filters the cards by date with most recent being at the top
+				filtterByDate(filteredData);
+				setCardList(filteredData);
+			}
 		} catch (error) {
 			console.log('Error getting card list: ', error);
 		}
-	}, [cardsCollectionRef]);
-
-	// States that track the current list of categories
-	const [categoryList, setCategoryList] = useState([]);
-	const categoriesCollectionRef = useMemo(
-		() => collection(db, 'categories'),
-		[]
-	);
+	}, [cardsCollectionRef, filterByCategory]);
 
 	// Gets the list of categories from firebase
 	const getCategoryList = useCallback(async () => {
@@ -143,24 +216,26 @@ export default function App() {
 		/>
 	));
 
+	const importantCardElements = importantCardList.map((card) => (
+		<Card
+			key={card.id}
+			id={card.id}
+			title={card.title}
+			category={card.category}
+			date={card.date}
+			start={card.start}
+			end={card.end}
+			location={card.location}
+			isImportant={card.isImportant}
+			deleteCard={deleteCard}
+			updateCard={updateCard}
+			categoryList={categoryList}
+		/>
+	));
+
 	/* ============================================================================================
     Creating New Cards / Categories
     ============================================================================================ */
-
-	// New card states
-	const [newTitle, setNewTitle] = useState('');
-	const [newDate, setNewDate] = useState('');
-	const [newStart, setNewStart] = useState('');
-	const [newEnd, setNewEnd] = useState('');
-	const [newLocation, setNewLocation] = useState('');
-	const [newCategory, setNewCategory] = useState('');
-	const [isUrgent, setIsUrgent] = useState(false);
-
-	// State that tracks if the form overlay should show, and function to toggle it
-	const [showInputModal, setshowInputModal] = useState(false);
-	const toggleInputModal = () => {
-		setshowInputModal((prevshowInputModal) => !prevshowInputModal);
-	};
 
 	// onClick function for adding new cards
 	const onAddCard = async () => {
@@ -183,12 +258,6 @@ export default function App() {
 		}
 	};
 
-	// States that track if the new category modal is shown
-	const [showCategoryModal, setShowCategoryModal] = useState(false);
-	const toggleShowCategory = () => {
-		setShowCategoryModal((prevShowCategoryModal) => !prevShowCategoryModal);
-	};
-
 	// Adds category and gets the list of categories again
 	const onAddCategory = async (obj) => {
 		try {
@@ -201,9 +270,20 @@ export default function App() {
 
 	return (
 		<div id='container'>
-			<Header toggleInputModal={toggleInputModal} />
-			<main id='card-container'>{cardElements}</main>
-			<Footer toggleShowCategory={toggleShowCategory} />
+			<Header
+				toggleInputModal={toggleInputModal}
+				importantVisibility={importantVisibility}
+				setImportantVisibility={setImportantVisibility}
+			/>
+			<main id='card-container'>
+				{importantVisibility && importantCardElements}
+				{cardElements}
+			</main>
+			<Footer
+				toggleShowCategory={toggleShowCategory}
+				filterByCategory={filterByCategory}
+				setfilterByCategory={setfilterByCategory}
+			/>
 			{showInputModal && (
 				<NewCardModal
 					toggleInputModal={toggleInputModal}
