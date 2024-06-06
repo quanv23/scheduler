@@ -129,15 +129,34 @@ export default function App() {
 			});
 		};
 
+		// Automatically deletes any cards that have passed by 3 days
+		const filterOverdueCards = (arrayOfCards) => {
+			const today = new Date();
+			today.setDate(today.getDate() - 3);
+			const cardsToKeep = arrayOfCards.filter((card) => {
+				const d = new Date(card.date);
+				return d > today;
+			});
+			const cardsToDelete = arrayOfCards.filter((card) => {
+				const d = new Date(card.date);
+				return today > d;
+			});
+			if (cardsToDelete) {
+				cardsToDelete.forEach((card) => deleteCard(card.id));
+			}
+			return cardsToKeep;
+		};
+
 		try {
 			// Gets collection from database and filters it, and attaches the id
 			const data = await getDocs(cardsCollectionRef);
-			const organizedData = data.docs.map((doc) => ({
+			let organizedData = data.docs.map((doc) => ({
 				...doc.data(),
 				id: doc.id,
 			}));
 
 			console.log('Tried getting cards');
+			organizedData = filterOverdueCards(organizedData);
 
 			// Splits the cards into important and non-important cards to render them seperately
 			const importantFilteredData = organizedData.filter(
@@ -199,39 +218,27 @@ export default function App() {
 	}, [getCardList, getCategoryList]);
 
 	// Creates multiple card elements by mapping their properties
-	const cardElements = cardList.map((card) => (
-		<Card
-			key={card.id}
-			id={card.id}
-			title={card.title}
-			category={card.category}
-			date={card.date}
-			start={card.start}
-			end={card.end}
-			location={card.location}
-			isImportant={card.isImportant}
-			deleteCard={deleteCard}
-			updateCard={updateCard}
-			categoryList={categoryList}
-		/>
-	));
+	const createCardList = (list) => {
+		return list.map((card) => (
+			<Card
+				key={card.id}
+				id={card.id}
+				title={card.title}
+				category={card.category}
+				date={card.date}
+				start={card.start}
+				end={card.end}
+				location={card.location}
+				isImportant={card.isImportant}
+				deleteCard={deleteCard}
+				updateCard={updateCard}
+				categoryList={categoryList}
+			/>
+		));
+	};
 
-	const importantCardElements = importantCardList.map((card) => (
-		<Card
-			key={card.id}
-			id={card.id}
-			title={card.title}
-			category={card.category}
-			date={card.date}
-			start={card.start}
-			end={card.end}
-			location={card.location}
-			isImportant={card.isImportant}
-			deleteCard={deleteCard}
-			updateCard={updateCard}
-			categoryList={categoryList}
-		/>
-	));
+	const cardElements = createCardList(cardList);
+	const importantCardElements = createCardList(importantCardList);
 
 	/* ============================================================================================
     Creating New Cards / Categories

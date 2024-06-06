@@ -50,7 +50,7 @@ export default function Card(props) {
 	}
 
 	// Formats the day into a more readable form
-	const dateObj = new Date(date);
+	const dateObj = new Date(`${date}T12:00:00`);
 	const getDateString = () => {
 		if (isNaN(dateObj.getTime())) {
 			return 'Invalid Date';
